@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Pets</h2>
+    <a href="{{ url_for('add_pet') }}" class="btn btn-primary">+ Add New Pet</a>
+</div>
+
+<div class="row">
+    {% if pets %}
+        {% for pet in pets %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">{{ pet.name }}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ pet.species }} - {{ pet.breed }}</h6>
+                    <p class="card-text">
+                        <strong>Age:</strong> {{ pet.age }} years<br>
+                        <strong>Weight:</strong> {{ pet.weight }} kg
+                    </p>
+                    <button class="btn btn-sm btn-outline-secondary">View Details</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12 text-center text-muted mt-5">
+            <h4>No pets added yet.</h4>
+            <p>Click "Add New Pet" to get started!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
