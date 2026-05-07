@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">&larr; Back to Dashboard</a>
+</div>
+
+<div class="card mb-4 border-primary">
+    <div class="card-body">
+        <h2 class="text-primary">{{ pet.name }}'s Profile</h2>
+        <p class="mb-0"><strong>Species:</strong> {{ pet.species }} | <strong>Breed:</strong> {{ pet.breed }} | <strong>Age:</strong> {{ pet.age }} | <strong>Weight:</strong> {{ pet.weight }} kg</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-success text-white">🍖 Feeding Schedule</div>
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    {% for feed in pet.feedings %}
+                        <li class="list-group-item">
+                            <strong>{{ feed.time }}</strong> - {{ feed.food_type }} ({{ feed.portion }})
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-muted">No schedule added.</li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h6>Add Schedule</h6>
+                <form action="{{ url_for('add_feeding', pet_id=pet.id) }}" method="POST">
+                    <input type="text" name="time" class="form-control form-control-sm mb-2" placeholder="Time (e.g. 8:00 AM)" required>
+                    <input type="text" name="food_type" class="form-control form-control-sm mb-2" placeholder="Food Type" required>
+                    <input type="text" name="portion" class="form-control form-control-sm mb-2" placeholder="Portion (e.g. 1 cup)" required>
+                    <button type="submit" class="btn btn-success btn-sm w-100">+ Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-info text-white">🩺 Health Status</div>
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    {% for health in pet.health_records %}
+                        <li class="list-group-item">
+                            <strong>{{ health.date.strftime('%b %d, %Y') }}</strong><br>
+                            <small>{{ health.notes }}</small>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-muted">No health records.</li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h6>Log Health Status</h6>
+                <form action="{{ url_for('add_health', pet_id=pet.id) }}" method="POST">
+                    <input type="date" name="date" class="form-control form-control-sm mb-2" required>
+                    <textarea name="notes" class="form-control form-control-sm mb-2" placeholder="Notes (e.g. Slight limp, threw up)" required></textarea>
+                    <button type="submit" class="btn btn-info text-white btn-sm w-100">+ Add Log</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-warning text-dark">💉 Vaccines Due</div>
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    {% for vax in pet.vaccines %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ vax.name }}
+                            <span class="badge bg-danger rounded-pill">{{ vax.next_due.strftime('%b %d, %Y') }}</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-muted">No reminders set.</li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <h6>Add Reminder</h6>
+                <form action="{{ url_for('add_vaccine', pet_id=pet.id) }}" method="POST">
+                    <input type="text" name="name" class="form-control form-control-sm mb-2" placeholder="Vaccine Name (e.g. Rabies)" required>
+                    <label class="form-label text-muted small mb-0">Next Due Date</label>
+                    <input type="date" name="next_due" class="form-control form-control-sm mb-2" required>
+                    <button type="submit" class="btn btn-warning btn-sm w-100">+ Add Reminder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
