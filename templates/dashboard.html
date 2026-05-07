@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* The big welcome banner */
+    .hero-section {
+        /* High-quality background image from Unsplash with a dark gradient overlay for text readability */
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+                    url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        color: white;
+        padding: 80px 20px;
+        border-radius: 20px;
+        margin-bottom: 40px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-bottom: 35px;
+        opacity: 0.9;
+    }
+
+    /* Floating animation for the pet cards */
+    .pet-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+    
+    .pet-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    /* Soft background for the top half of the cards */
+    .card-header-custom {
+        background-color: #f8f9fc;
+        border-bottom: 3px solid #0d6efd;
+        padding: 25px 15px 15px 15px;
+        position: relative;
+    }
+</style>
+
+<div class="hero-section">
+    <h1 class="hero-title">Smart Pet Care</h1>
+    <p class="hero-subtitle">The easiest way to track feedings, health, and happiness for your furry family members.</p>
+    <a href="{{ url_for('add_pet') }}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm fw-bold">+ Add a New Pet</a>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4 px-2">
+    <h3 class="text-secondary fw-bold mb-0">🐾 My Pets</h3>
+</div>
+
+<div class="row">
+    {% if pets %}
+        {% for pet in pets %}
+        <div class="col-md-4 mb-4">
+            <div class="card pet-card shadow-sm h-100 border">
+                <div class="card-header-custom text-center">
+                    <img src="https://ui-avatars.com/api/?name={{ pet.name }}&background=random&color=fff&size=80&rounded=true&bold=true" alt="Pet Avatar" class="mb-3 shadow-sm border border-white border-3">
+                    <h4 class="card-title text-dark mb-1 fw-bold">{{ pet.name }}</h4>
+                    <span class="badge bg-primary px-3 py-2 rounded-pill">{{ pet.species }}</span>
+                </div>
+                <div class="card-body bg-white d-flex flex-column">
+                    <p class="card-text text-center text-muted mb-4 font-italic">"{{ pet.breed }}"</p>
+                    
+                    <div class="d-flex justify-content-between text-secondary mb-4 px-3 bg-light rounded py-2">
+                        <span><i class="fw-bold">Age:</i> {{ pet.age }} yrs</span>
+                        <span><i class="fw-bold">Weight:</i> {{ pet.weight }} kg</span>
+                    </div>
+                    
+                    <div class="mt-auto">
+                        <a href="{{ url_for('pet_profile', pet_id=pet.id) }}" class="btn btn-outline-primary w-100 rounded-pill fw-bold">Manage Profile &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12 text-center text-muted mt-2">
+            <div class="p-5 bg-white rounded-4 shadow-sm border border-light">
+                <h4 class="mb-3 text-dark fw-bold">Your dashboard is empty!</h4>
+                <p class="mb-0">It looks like you haven't added any pets yet.<br>Scroll up and click the button in the banner to get started.</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
