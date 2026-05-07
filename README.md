@@ -84,11 +84,3 @@ smart-pet-care/
     ├── base.html          # Base layout and navigation bar
     ├── index.html         # Main dashboard displaying all pets
     └── add_pet.html       # Form to add a new pet profile
-
-    
-🔮 Future Enhancements
-Feeding Schedules: Add functionality to log feeding times and food types.
-
-Vaccination Tracker: Implement a system to track past vaccinations and alert users of upcoming due dates.
-
-User Authentication: Allow multiple users to register, log in, and manage their own specific pets privately.
