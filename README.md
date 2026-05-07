@@ -17,7 +17,6 @@ A web-based application developed to help pet owners manage and monitor their pe
 * **Frontend:** HTML5, Jinja2 Templating, Bootstrap 5 (CSS)
 * **DevOps:** Docker, Git/GitHub
 
----
 
 ## 🚀 Getting Started
 
