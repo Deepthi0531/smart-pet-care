@@ -4,7 +4,7 @@
     <h1 class="display-4 fw-bold">Welcome to Smart Pet Care</h1>
     <p class="lead text-muted mb-5">Your all-in-one digital dashboard for tracking your furry family members' health, feeding, and happiness.</p>
     
-    <img src="image.png" alt="Happy Dog" class="img-fluid rounded shadow-lg mb-5" style="max-height: 400px; object-fit: cover;">
+    <img src="{{ url_for('static', filename='image.png') }}" alt="Happy Dog" class="img-fluid rounded shadow-lg mb-5" style="max-height: 400px; object-fit: cover;">
     
     <div>
         <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg px-5 me-3">Create an Account</a>
